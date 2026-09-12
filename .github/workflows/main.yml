@@ -21,17 +21,22 @@ jobs:
           distribution: temurin
           java-version: "21"
 
+      - name: Extract project ZIP
+        run: |
+          unzip -q BanUI-1.21.11-GitHub-Ready-FIXED.zip -d project
+
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: "8.14.3"
 
       - name: Build
+        working-directory: project/BanUI-Fabric-1.21.11
         run: gradle build --no-daemon
 
       - name: Upload JAR
         uses: actions/upload-artifact@v4
         with:
           name: BanUI-1.21.11-JAR
-          path: build/libs/*.jar
+          path: project/BanUI-Fabric-1.21.11/build/libs/*.jar
           if-no-files-found: error
